@@ -54,7 +54,7 @@ namespace SchoolAPI.Controllers
             return status;
         }
         [HttpPut("{id}")]
-        public bool UpdateProduct(int id, Student studentItem)
+        public bool UpdateStudent(int id, Student studentItem)
         {
             bool status;
             try
@@ -76,7 +76,7 @@ namespace SchoolAPI.Controllers
             return status;
         }
         [HttpDelete("{id}")]
-        public bool DeleteProduct(int id)
+        public bool DeleteStudent(int id)
         {
             bool status;
             try
@@ -95,28 +95,21 @@ namespace SchoolAPI.Controllers
             }
             return status;
         }
-        //public IEnumerable<StudentModel> ListFilterStudent(string searchString, int page, int pageSize)
-        //{
-        //    IQueryable<UserViewModel> model;
-        //    model = from a in db.Users
-        //        join b in db.DonVis on a.DonViID equals b.DonViID
-        //        join c in db.Lops on a.LopID equals c.LopID
-        //        join d in db.VaiTroes on a.VaiTroID equals d.VaiTroID
-        //        select new StudentModel()
-        //        {
-        //            UserID = a.UserID,
-        //            Email = a.Email,
-        //            UserName = a.UserName,
-        //            TenDonVi = b.TenDonVi,
-        //            TenLop = c.TenLop,
-        //            TenVaiTro = d.TenVaiTro
-        //        };
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        model = model.Where(x => x.UserName.Contains(searchString) || x.Email.Contains(searchString)
-        //                                                                   || x.TenVaiTro.Contains(searchString) || x.TenDonVi.Contains(searchString) || x.TenLop.Contains(searchString));
-        //    }
-        //    return model.OrderBy(x => x.TenVaiTro).ToPagedList(page, pageSize);
-        //}
+        public IEnumerable<StudentModel> ListFilterStudent(string searchString)
+        {
+            IQueryable<StudentModel> model = _context.Students
+                .Include(x => x.Enrollments)
+                .Select(x => new StudentModel()
+                {
+                    LastName = x.LastName,
+                    FirstMidName = x.FirstMidName,
+                    GradeCount = x.Enrollments.Count
+                });
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString));
+            }
+            return model.OrderBy(x => x.ID);
+        }
     }
 }
