@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SchoolAPI.Models;
 
-namespace SchoolAPI.Helper
+namespace SchoolAPI.Persistence
 {
     public static class SeedingData
     {

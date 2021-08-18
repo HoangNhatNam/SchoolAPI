@@ -95,21 +95,22 @@ namespace SchoolAPI.Controllers
             }
             return status;
         }
-        public IEnumerable<StudentModel> ListFilterStudent(string searchString)
-        {
-            IQueryable<StudentModel> model = _context.Students
-                .Include(x => x.Enrollments)
-                .Select(x => new StudentModel()
-                {
-                    LastName = x.LastName,
-                    FirstMidName = x.FirstMidName,
-                    GradeCount = x.Enrollments.Count
-                });
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                model = model.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString));
-            }
-            return model.OrderBy(x => x.ID);
-        }
+        //[HttpGet]
+        //public IEnumerable<StudentModel> ListFilterStudent(string searchString)
+        //{
+        //    IQueryable<StudentModel> model = _context.Students
+        //        .Include(x => x.Enrollments)
+        //        .Select(x => new StudentModel()
+        //        {
+        //            LastName = x.LastName,
+        //            FirstMidName = x.FirstMidName,
+        //            GradeCount = x.Enrollments.Count
+        //        });
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //        model = model.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString));
+        //    }
+        //    return model.OrderBy(x => x.ID);
+        //}
     }
 }
