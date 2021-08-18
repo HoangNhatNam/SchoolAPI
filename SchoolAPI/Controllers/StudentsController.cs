@@ -20,7 +20,7 @@ namespace SchoolAPI.Controllers
             _context = context;
         }
         [HttpGet]
-        public IEnumerable<StudentModel> ListUser()
+        public IEnumerable<StudentModel> ListStudent()
         {
             IQueryable<StudentModel> model = _context.Students
                 .Include(x => x.Enrollments)
@@ -54,12 +54,12 @@ namespace SchoolAPI.Controllers
             return status;
         }
         [HttpPut("{id}")]
-        public bool UpdateStudent(int id, Student studentItem)
+        public bool UpdateStudent(Student studentItem)
         {
             bool status;
             try
             {
-                Student stuItem = _context.Students.Find(id);
+                Student stuItem = _context.Students.Find(studentItem.ID);
                 if (stuItem != null)
                 {
                     stuItem.LastName = studentItem.LastName;
