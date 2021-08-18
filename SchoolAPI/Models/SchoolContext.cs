@@ -81,19 +81,18 @@ namespace SchoolAPI.Models
             modelBuilder.Entity<CourseAssignment>(
                 eb => {
                     eb.ToTable("CourseAssignment").HasKey(x => new { x.CourseID, x.InstructorID });
-                    eb.HasOne(x => x.Instructor).WithMany(i => i.CourseAssignment).HasForeignKey(c => c.InstructorID).HasPrincipalKey(i => i.ID);
-                    eb.HasOne(x => x.Course).WithMany(c => c.CourseAssignment).HasForeignKey(c => c.CourseID).HasPrincipalKey(c => c.CourseID);
+                    eb.HasOne(x => x.Instructor).WithMany(i => i.CourseAssignment).HasForeignKey(c => c.InstructorID).HasPrincipalKey(i => i.ID).OnDelete(DeleteBehavior.Restrict);
+                    eb.HasOne(x => x.Course).WithMany(c => c.CourseAssignment).HasForeignKey(c => c.CourseID).HasPrincipalKey(c => c.CourseID).OnDelete(DeleteBehavior.Restrict);
                     eb.Property(x => x.CourseID).HasColumnName("course_id");
                     eb.Property(x => x.InstructorID).HasColumnName("instructor_id");
                 });
 
             modelBuilder.Entity<Department>(
                 eb => {
-                    eb.ToTable("Department").HasKey(x => x.DepartmentID);
                     eb.HasOne(x => x.Instructor).WithMany().HasForeignKey(d => d.InstructorID);
                     eb.Property(x => x.DepartmentID).HasColumnName("department_id");
                     eb.Property(x => x.Name).HasColumnName("name");
-                    eb.Property(x => x.Budget).HasColumnName("budget");
+                    eb.Property(x => x.Budget).HasColumnName("budget").HasColumnType("decimal");
                     eb.Property(x => x.StartDate).HasColumnName("start_date");
                     eb.Property(x => x.InstructorID).HasColumnName("instructor_id");
                 });

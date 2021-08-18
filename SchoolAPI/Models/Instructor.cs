@@ -9,6 +9,7 @@ namespace SchoolAPI.Models
 {
     public class Instructor
     {
+        [Key]
         public int ID { get; set; }
 
         [StringLength(50)]
@@ -21,6 +22,6 @@ namespace SchoolAPI.Models
 
         public OfficeAssignment OfficeAssignment { get; set; }
 
-        public List<CourseAssignment> CourseAssignment { get; set; }
+        public ICollection<CourseAssignment> CourseAssignment { get; set; }
     }
 }

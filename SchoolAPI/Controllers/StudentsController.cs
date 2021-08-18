@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,17 @@ namespace SchoolAPI.Controllers
             _context = context;
         }
         [HttpGet]
-        public List<Student> GetAllStudent()
+        public IEnumerable<StudentModel> ListUser()
         {
-            return _context.Students.Include(x => x.Enrollments).ToList();
+            IQueryable<StudentModel> model = _context.Students
+                .Include(x => x.Enrollments)
+                .Select(x => new StudentModel()
+                {
+                    LastName = x.LastName,
+                    FirstMidName = x.FirstMidName,
+                    GradeCount = x.Enrollments.Count
+                });
+            return model;
         }
         [HttpGet("{id}")]
         public Student GetStudent(int studentId)
@@ -86,5 +95,28 @@ namespace SchoolAPI.Controllers
             }
             return status;
         }
+        //public IEnumerable<StudentModel> ListFilterStudent(string searchString, int page, int pageSize)
+        //{
+        //    IQueryable<UserViewModel> model;
+        //    model = from a in db.Users
+        //        join b in db.DonVis on a.DonViID equals b.DonViID
+        //        join c in db.Lops on a.LopID equals c.LopID
+        //        join d in db.VaiTroes on a.VaiTroID equals d.VaiTroID
+        //        select new StudentModel()
+        //        {
+        //            UserID = a.UserID,
+        //            Email = a.Email,
+        //            UserName = a.UserName,
+        //            TenDonVi = b.TenDonVi,
+        //            TenLop = c.TenLop,
+        //            TenVaiTro = d.TenVaiTro
+        //        };
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //        model = model.Where(x => x.UserName.Contains(searchString) || x.Email.Contains(searchString)
+        //                                                                   || x.TenVaiTro.Contains(searchString) || x.TenDonVi.Contains(searchString) || x.TenLop.Contains(searchString));
+        //    }
+        //    return model.OrderBy(x => x.TenVaiTro).ToPagedList(page, pageSize);
+        //}
     }
 }

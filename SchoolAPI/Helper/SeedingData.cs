@@ -18,13 +18,13 @@ namespace SchoolAPI.Helper
                 new { ID = 4, LastName = "Luu", FirstMidName = "Duc Thai", EnrollmentDate = DateTime.Now }
                 );
             modelBuilder.Entity<Enrollment>().HasData(
-                new { EnrollmentID = 1, CourseID = 2, StudentID = 1, Grade = 2 },
-                new { EnrollmentID = 2, CourseID = 3, StudentID = 1, Grade = 4 },
-                new { EnrollmentID = 3, CourseID = 4, StudentID = 2, Grade = 1 },
-                new { EnrollmentID = 4, CourseID = 5, StudentID = 2, Grade = 0 },
-                new { EnrollmentID = 5, CourseID = 1, StudentID = 3, Grade = 3 },
-                new { EnrollmentID = 6, CourseID = 2, StudentID = 3, Grade = 1 },
-                new { EnrollmentID = 7, CourseID = 4, StudentID = 3, Grade = 4 }
+                new { EnrollmentID = 1, CourseID = 2, StudentID = 1, Grade = Grade.A },
+                new { EnrollmentID = 2, CourseID = 3, StudentID = 1, Grade = Grade.C },
+                new { EnrollmentID = 3, CourseID = 4, StudentID = 2, Grade = Grade.D },
+                new { EnrollmentID = 4, CourseID = 5, StudentID = 2, Grade = Grade.A },
+                new { EnrollmentID = 5, CourseID = 1, StudentID = 3, Grade = Grade.B },
+                new { EnrollmentID = 6, CourseID = 2, StudentID = 3, Grade = Grade.None },
+                new { EnrollmentID = 7, CourseID = 4, StudentID = 3, Grade = Grade.E }
             );
             modelBuilder.Entity<Course>().HasData(
                 new { CourseID = 1, Title = "Thiet ke mau", Credits = 2000000, DepartmentID = 7 },

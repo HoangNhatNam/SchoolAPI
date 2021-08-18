@@ -136,7 +136,7 @@ namespace SchoolAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Budget")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal")
                         .HasColumnName("budget");
 
                     b.Property<int>("InstructorID")
@@ -164,7 +164,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "English",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(5280)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3187)
                         },
                         new
                         {
@@ -172,7 +172,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 2,
                             Name = "Computer Science",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6298)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3873)
                         },
                         new
                         {
@@ -180,7 +180,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 3,
                             Name = "Scince",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6304)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3877)
                         },
                         new
                         {
@@ -188,7 +188,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "Social Studies",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6305)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3878)
                         },
                         new
                         {
@@ -196,7 +196,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 2,
                             Name = "Theology",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6307)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3879)
                         },
                         new
                         {
@@ -204,7 +204,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 3,
                             Name = "Mathematics",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6308)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3881)
                         },
                         new
                         {
@@ -212,7 +212,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "IT",
-                            StartDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(6309)
+                            StartDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3882)
                         });
                 });
 
@@ -228,8 +228,8 @@ namespace SchoolAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("course_id");
 
-                    b.Property<int>("Grade")
-                        .HasColumnType("int")
+                    b.Property<string>("Grade")
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("grade");
 
                     b.Property<int>("StudentID")
@@ -243,6 +243,57 @@ namespace SchoolAPI.Migrations
                     b.HasIndex("StudentID");
 
                     b.ToTable("Enrollment");
+
+                    b.HasData(
+                        new
+                        {
+                            EnrollmentID = 1,
+                            CourseID = 2,
+                            Grade = "A",
+                            StudentID = 1
+                        },
+                        new
+                        {
+                            EnrollmentID = 2,
+                            CourseID = 3,
+                            Grade = "C",
+                            StudentID = 1
+                        },
+                        new
+                        {
+                            EnrollmentID = 3,
+                            CourseID = 4,
+                            Grade = "D",
+                            StudentID = 2
+                        },
+                        new
+                        {
+                            EnrollmentID = 4,
+                            CourseID = 5,
+                            Grade = "A",
+                            StudentID = 2
+                        },
+                        new
+                        {
+                            EnrollmentID = 5,
+                            CourseID = 1,
+                            Grade = "B",
+                            StudentID = 3
+                        },
+                        new
+                        {
+                            EnrollmentID = 6,
+                            CourseID = 2,
+                            Grade = "None",
+                            StudentID = 3
+                        },
+                        new
+                        {
+                            EnrollmentID = 7,
+                            CourseID = 4,
+                            Grade = "E",
+                            StudentID = 3
+                        });
                 });
 
             modelBuilder.Entity("SchoolAPI.Models.Instructor", b =>
@@ -276,28 +327,28 @@ namespace SchoolAPI.Migrations
                         {
                             ID = 1,
                             FirstMidName = "Son Kim Quang",
-                            HireDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(3340),
+                            HireDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(1870),
                             LastName = "Thach"
                         },
                         new
                         {
                             ID = 2,
                             FirstMidName = "Ngoc Tam",
-                            HireDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(4298),
+                            HireDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2501),
                             LastName = "Vo"
                         },
                         new
                         {
                             ID = 3,
                             FirstMidName = "Van A",
-                            HireDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(4305),
+                            HireDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2506),
                             LastName = "Nguyen"
                         },
                         new
                         {
                             ID = 4,
                             FirstMidName = "Thoai",
-                            HireDate = new DateTime(2021, 8, 18, 12, 15, 50, 279, DateTimeKind.Local).AddTicks(4306),
+                            HireDate = new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2507),
                             LastName = "Chi"
                         });
                 });
@@ -346,28 +397,28 @@ namespace SchoolAPI.Migrations
                         new
                         {
                             ID = 1,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 12, 15, 50, 277, DateTimeKind.Local).AddTicks(543),
+                            EnrollmentDate = new DateTime(2021, 8, 18, 15, 10, 9, 225, DateTimeKind.Local).AddTicks(4631),
                             FirstMidName = "Nhat Nam",
                             LastName = "Hoang"
                         },
                         new
                         {
                             ID = 2,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 12, 15, 50, 278, DateTimeKind.Local).AddTicks(640),
+                            EnrollmentDate = new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2212),
                             FirstMidName = "Nhat Minh",
                             LastName = "Thi"
                         },
                         new
                         {
                             ID = 3,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 12, 15, 50, 278, DateTimeKind.Local).AddTicks(658),
+                            EnrollmentDate = new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2226),
                             FirstMidName = "Viet Hung",
                             LastName = "Ngo"
                         },
                         new
                         {
                             ID = 4,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 12, 15, 50, 278, DateTimeKind.Local).AddTicks(660),
+                            EnrollmentDate = new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2228),
                             FirstMidName = "Duc Thai",
                             LastName = "Luu"
                         });
@@ -389,13 +440,13 @@ namespace SchoolAPI.Migrations
                     b.HasOne("SchoolAPI.Models.Course", "Course")
                         .WithMany("CourseAssignment")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SchoolAPI.Models.Instructor", "Instructor")
                         .WithMany("CourseAssignment")
                         .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");

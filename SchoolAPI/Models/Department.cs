@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SchoolAPI.Models
 {
+    [Table("Department")]
     public class Department
     {
+        [Key]
         public int DepartmentID { get; set; }
         public string Name { get; set; }
         public decimal Budget { get; set; }
@@ -14,6 +18,6 @@ namespace SchoolAPI.Models
         public int InstructorID { get; set; }
 
         public Instructor Instructor { get; set; }
-        public List<Course> Courses { get; set; }
+        public ICollection<Course> Courses { get; set; }
     }
 }
