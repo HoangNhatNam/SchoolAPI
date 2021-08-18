@@ -21,7 +21,7 @@ namespace SchoolAPI.Controllers
         [HttpGet]
         public List<Student> GetAllStudent()
         {
-            return _context.Students.ToList();
+            return _context.Students.Include(x => x.Enrollments).ToList();
         }
         [HttpGet("{id}")]
         public Student GetStudent(int studentId)

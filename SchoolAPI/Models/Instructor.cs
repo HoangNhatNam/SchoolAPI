@@ -20,5 +20,7 @@ namespace SchoolAPI.Models
         public DateTime HireDate { get; set; }
 
         public OfficeAssignment OfficeAssignment { get; set; }
+
+        public List<CourseAssignment> CourseAssignment { get; set; }
     }
 }

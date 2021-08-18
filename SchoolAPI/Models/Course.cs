@@ -8,11 +8,12 @@ namespace SchoolAPI.Models
 {
     public class Course
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CourseID { get; set; }
         public string Title { get; set; }
         public int Credits { get; set; }
-
-        public ICollection<Enrollment> Enrollments { get; set; }
+        public int DepartmentID { get; set; }
+        public List<Enrollment> Enrollments { get; set; }
+        public List<CourseAssignment> CourseAssignment { get; set; }
+        public Department Department { get; set; }
     }
 }
