@@ -19,6 +19,8 @@ namespace SchoolAPI.Controllers
         {
             _context = context;
         }
+        public List<StudentModel> Students { get; set; }
+
         [HttpGet]
         public IEnumerable<StudentModel> ListStudent()
         {
@@ -95,22 +97,41 @@ namespace SchoolAPI.Controllers
             }
             return status;
         }
-        //[HttpGet]
-        //public IEnumerable<StudentModel> ListFilterStudent(string searchString)
-        //{
-        //    IQueryable<StudentModel> model = _context.Students
-        //        .Include(x => x.Enrollments)
-        //        .Select(x => new StudentModel()
-        //        {
-        //            LastName = x.LastName,
-        //            FirstMidName = x.FirstMidName,
-        //            GradeCount = x.Enrollments.Count
-        //        });
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        model = model.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString));
-        //    }
-        //    return model.OrderBy(x => x.ID);
-        //}
+        public async Task ListFilterStudent(string sortOrderName,string sortOrderGrade, string searchString)
+        {
+            string nameSort = String.IsNullOrEmpty(sortOrderName) ? "name_desc" : "";
+            string gradeSort = String.IsNullOrEmpty(sortOrderGrade) ? "grade_desc" : "";
+            IQueryable<StudentModel> student = _context.Students
+                .Include(x => x.Enrollments)
+                .Select(x => new StudentModel()
+                {
+                    LastName = x.LastName,
+                    FirstMidName = x.FirstMidName,
+                    GradeCount = x.Enrollments.Count
+                });
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                student = student.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString) || x.GradeCount.ToString().Contains(searchString));
+            }
+            switch (nameSort)
+            {
+                case "name_desc":
+                    student = student.OrderBy(s => s.FirstMidName);
+                    break;
+                default:
+                    student = student.OrderBy(s => s.LastName);
+                    break;
+            }
+            switch (gradeSort)
+            {
+                case "grade_desc":
+                    student = student.OrderBy(s => s.Grade);
+                    break;
+                default:
+                    student = student.OrderBy(s => s.LastName);
+                    break;
+            }
+            Students = await student.AsNoTracking().ToListAsync();
+        }
     }
 }
