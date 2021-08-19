@@ -18,10 +18,11 @@ namespace SchoolAPI.Controllers
         {
             _context = context;
         }
+        public List<InstructorModel> Instructor { get; set; }
         [HttpGet]
-        public IEnumerable<InstructorModel> ListInstructor()
+        public async Task ListInstructor()
         {
-            IQueryable<InstructorModel> model = _context.Instructors
+            IQueryable<InstructorModel> instructor = _context.Instructors
                 .Include(x => x.OfficeAssignment)
                 .Include(x => x.CourseAssignment)
                 .ThenInclude(x => x.Count)
@@ -34,7 +35,7 @@ namespace SchoolAPI.Controllers
                     Title = x.CourseAssignment.First().Course.Title
                 });
 
-            return model;
+            Instructor = await instructor.AsNoTracking().ToListAsync();
         }
     }
 }

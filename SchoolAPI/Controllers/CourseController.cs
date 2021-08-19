@@ -18,10 +18,11 @@ namespace SchoolAPI.Controllers
         {
             _context = context;
         }
+        public List<CourseModel> Course { get; set; }
         [HttpGet]
-        public IEnumerable<CourseModel> ListCourse()
+        public async Task ListCourse()
         {
-            IQueryable<CourseModel> model = _context.Courses
+            IQueryable<CourseModel> course = _context.Courses
                 .Include(x => x.Department)
                 .Select(x => new CourseModel()
                 {
@@ -30,7 +31,7 @@ namespace SchoolAPI.Controllers
                     Credits = x.Credits,
                     Name = x.Department.Name
                 });
-            return model;
+            Course = await course.AsNoTracking().ToListAsync();
         }
     }
 }
