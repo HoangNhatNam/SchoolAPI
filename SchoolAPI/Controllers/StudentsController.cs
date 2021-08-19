@@ -24,7 +24,7 @@ namespace SchoolAPI.Controllers
         [HttpGet]
         public IEnumerable<StudentModel> ListStudent()
         {
-            IQueryable<StudentModel> model = _context.Students
+            IQueryable<StudentModel> student = _context.Students
                 .Include(x => x.Enrollments)
                 .Select(x => new StudentModel()
                 {
@@ -32,7 +32,7 @@ namespace SchoolAPI.Controllers
                     FirstMidName = x.FirstMidName,
                     GradeCount = x.Enrollments.Count
                 });
-            return model;
+            return student;
         }
         [HttpGet("{id}")]
         public Student GetStudent(int studentId)
