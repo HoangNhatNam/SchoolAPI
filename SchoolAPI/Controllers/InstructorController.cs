@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SchoolAPI.Models;
+using SchoolAPI.Persistence.EF;
 
 namespace SchoolAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace SchoolAPI.Controllers
         {
             _context = context;
         }
-        public List<InstructorModel> Instructor { get; set; }
+        public IList<InstructorModel> Instructor { get; set; }
         [HttpGet]
         public async Task ListInstructor()
         {

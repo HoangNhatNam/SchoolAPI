@@ -154,10 +154,10 @@ namespace SchoolAPI.Migrations
                 columns: new[] { "instructor_id", "first_mid_name", "hire_date", "last_name" },
                 values: new object[,]
                 {
-                    { 1, "Son Kim Quang", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(1870), "Thach" },
-                    { 2, "Ngoc Tam", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2501), "Vo" },
-                    { 3, "Van A", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2506), "Nguyen" },
-                    { 4, "Thoai", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(2507), "Chi" }
+                    { 1, "Son Kim Quang", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(2418), "Thach" },
+                    { 2, "Ngoc Tam", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3058), "Vo" },
+                    { 3, "Van A", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3063), "Nguyen" },
+                    { 4, "Thoai", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3065), "Chi" }
                 });
 
             migrationBuilder.InsertData(
@@ -165,10 +165,10 @@ namespace SchoolAPI.Migrations
                 columns: new[] { "student_id", "enrollment_date", "first_mid_name", "last_name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 8, 18, 15, 10, 9, 225, DateTimeKind.Local).AddTicks(4631), "Nhat Nam", "Hoang" },
-                    { 2, new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2212), "Nhat Minh", "Thi" },
-                    { 3, new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2226), "Viet Hung", "Ngo" },
-                    { 4, new DateTime(2021, 8, 18, 15, 10, 9, 226, DateTimeKind.Local).AddTicks(2228), "Duc Thai", "Luu" }
+                    { 1, new DateTime(2021, 8, 22, 11, 2, 40, 212, DateTimeKind.Local).AddTicks(7200), "Nhat Nam", "Hoang" },
+                    { 2, new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2408), "Nhat Minh", "Thi" },
+                    { 3, new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2421), "Viet Hung", "Ngo" },
+                    { 4, new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2423), "Duc Thai", "Luu" }
                 });
 
             migrationBuilder.InsertData(
@@ -176,13 +176,13 @@ namespace SchoolAPI.Migrations
                 columns: new[] { "department_id", "budget", "instructor_id", "name", "start_date" },
                 values: new object[,]
                 {
-                    { 1, 3000000m, 1, "English", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3187) },
-                    { 4, 3000000m, 1, "Social Studies", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3878) },
-                    { 7, 3000000m, 1, "IT", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3882) },
-                    { 2, 3000000m, 2, "Computer Science", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3873) },
-                    { 5, 3000000m, 2, "Theology", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3879) },
-                    { 3, 3000000m, 3, "Scince", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3877) },
-                    { 6, 3000000m, 3, "Mathematics", new DateTime(2021, 8, 18, 15, 10, 9, 227, DateTimeKind.Local).AddTicks(3881) }
+                    { 1, 3000000m, 1, "English", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3796) },
+                    { 4, 3000000m, 1, "Social Studies", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4531) },
+                    { 7, 3000000m, 1, "IT", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4535) },
+                    { 2, 3000000m, 2, "Computer Science", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4526) },
+                    { 5, 3000000m, 2, "Theology", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4532) },
+                    { 3, 3000000m, 3, "Scince", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4530) },
+                    { 6, 3000000m, 3, "Mathematics", new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4534) }
                 });
 
             migrationBuilder.InsertData(

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SchoolAPI.Persistence.Entities;
 
 namespace SchoolAPI.Models
 {

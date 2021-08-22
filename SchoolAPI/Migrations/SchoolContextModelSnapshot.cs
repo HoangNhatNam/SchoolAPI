@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SchoolAPI.Models;
+using SchoolAPI.Persistence.EF;
 
 namespace SchoolAPI.Migrations
 {
@@ -19,7 +19,7 @@ namespace SchoolAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("SchoolAPI.Models.Course", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Course", b =>
                 {
                     b.Property<int>("CourseID")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace SchoolAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.CourseAssignment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.CourseAssignment", b =>
                 {
                     b.Property<int>("CourseID")
                         .HasColumnType("int")
@@ -127,7 +127,7 @@ namespace SchoolAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Department", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Department", b =>
                 {
                     b.Property<int>("DepartmentID")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "English",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9034)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3796)
                         },
                         new
                         {
@@ -172,7 +172,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 2,
                             Name = "Computer Science",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9961)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4526)
                         },
                         new
                         {
@@ -180,7 +180,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 3,
                             Name = "Scince",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9967)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4530)
                         },
                         new
                         {
@@ -188,7 +188,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "Social Studies",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9970)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4531)
                         },
                         new
                         {
@@ -196,7 +196,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 2,
                             Name = "Theology",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9971)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4532)
                         },
                         new
                         {
@@ -204,7 +204,7 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 3,
                             Name = "Mathematics",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9973)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4534)
                         },
                         new
                         {
@@ -212,11 +212,11 @@ namespace SchoolAPI.Migrations
                             Budget = 3000000m,
                             InstructorID = 1,
                             Name = "IT",
-                            StartDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(9974)
+                            StartDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(4535)
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Enrollment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Enrollment", b =>
                 {
                     b.Property<int>("EnrollmentID")
                         .ValueGeneratedOnAdd()
@@ -296,7 +296,7 @@ namespace SchoolAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Instructor", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Instructor", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -327,33 +327,33 @@ namespace SchoolAPI.Migrations
                         {
                             ID = 1,
                             FirstMidName = "Son Kim Quang",
-                            HireDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(6807),
+                            HireDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(2418),
                             LastName = "Thach"
                         },
                         new
                         {
                             ID = 2,
                             FirstMidName = "Ngoc Tam",
-                            HireDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(7915),
+                            HireDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3058),
                             LastName = "Vo"
                         },
                         new
                         {
                             ID = 3,
                             FirstMidName = "Van A",
-                            HireDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(7922),
+                            HireDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3063),
                             LastName = "Nguyen"
                         },
                         new
                         {
                             ID = 4,
                             FirstMidName = "Thoai",
-                            HireDate = new DateTime(2021, 8, 18, 18, 2, 54, 635, DateTimeKind.Local).AddTicks(7924),
+                            HireDate = new DateTime(2021, 8, 22, 11, 2, 40, 215, DateTimeKind.Local).AddTicks(3065),
                             LastName = "Chi"
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.OfficeAssignment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.OfficeAssignment", b =>
                 {
                     b.Property<int>("InstructorID")
                         .HasColumnType("int")
@@ -369,7 +369,7 @@ namespace SchoolAPI.Migrations
                     b.ToTable("OfficeAssignment");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Student", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Student", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -397,36 +397,36 @@ namespace SchoolAPI.Migrations
                         new
                         {
                             ID = 1,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 18, 2, 54, 632, DateTimeKind.Local).AddTicks(7771),
+                            EnrollmentDate = new DateTime(2021, 8, 22, 11, 2, 40, 212, DateTimeKind.Local).AddTicks(7200),
                             FirstMidName = "Nhat Nam",
                             LastName = "Hoang"
                         },
                         new
                         {
                             ID = 2,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 18, 2, 54, 633, DateTimeKind.Local).AddTicks(8553),
+                            EnrollmentDate = new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2408),
                             FirstMidName = "Nhat Minh",
                             LastName = "Thi"
                         },
                         new
                         {
                             ID = 3,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 18, 2, 54, 633, DateTimeKind.Local).AddTicks(8569),
+                            EnrollmentDate = new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2421),
                             FirstMidName = "Viet Hung",
                             LastName = "Ngo"
                         },
                         new
                         {
                             ID = 4,
-                            EnrollmentDate = new DateTime(2021, 8, 18, 18, 2, 54, 633, DateTimeKind.Local).AddTicks(8571),
+                            EnrollmentDate = new DateTime(2021, 8, 22, 11, 2, 40, 214, DateTimeKind.Local).AddTicks(2423),
                             FirstMidName = "Duc Thai",
                             LastName = "Luu"
                         });
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Course", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Course", b =>
                 {
-                    b.HasOne("SchoolAPI.Models.Department", "Department")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -435,15 +435,15 @@ namespace SchoolAPI.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.CourseAssignment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.CourseAssignment", b =>
                 {
-                    b.HasOne("SchoolAPI.Models.Course", "Course")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Course", "Course")
                         .WithMany("CourseAssignment")
                         .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SchoolAPI.Models.Instructor", "Instructor")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Instructor", "Instructor")
                         .WithMany("CourseAssignment")
                         .HasForeignKey("InstructorID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -454,9 +454,9 @@ namespace SchoolAPI.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Department", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Department", b =>
                 {
-                    b.HasOne("SchoolAPI.Models.Instructor", "Instructor")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Instructor", "Instructor")
                         .WithMany()
                         .HasForeignKey("InstructorID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -465,15 +465,15 @@ namespace SchoolAPI.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Enrollment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Enrollment", b =>
                 {
-                    b.HasOne("SchoolAPI.Models.Course", "Course")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Course", "Course")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolAPI.Models.Student", "Student")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -484,37 +484,37 @@ namespace SchoolAPI.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.OfficeAssignment", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.OfficeAssignment", b =>
                 {
-                    b.HasOne("SchoolAPI.Models.Instructor", "Instructor")
+                    b.HasOne("SchoolAPI.Persistence.Entities.Instructor", "Instructor")
                         .WithOne("OfficeAssignment")
-                        .HasForeignKey("SchoolAPI.Models.OfficeAssignment", "InstructorID")
+                        .HasForeignKey("SchoolAPI.Persistence.Entities.OfficeAssignment", "InstructorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Course", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Course", b =>
                 {
                     b.Navigation("CourseAssignment");
 
                     b.Navigation("Enrollments");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Department", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Department", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Instructor", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Instructor", b =>
                 {
                     b.Navigation("CourseAssignment");
 
                     b.Navigation("OfficeAssignment");
                 });
 
-            modelBuilder.Entity("SchoolAPI.Models.Student", b =>
+            modelBuilder.Entity("SchoolAPI.Persistence.Entities.Student", b =>
                 {
                     b.Navigation("Enrollments");
                 });

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SchoolAPI.Models
+namespace SchoolAPI.Persistence.Entities
 {
     public class Instructor
     {

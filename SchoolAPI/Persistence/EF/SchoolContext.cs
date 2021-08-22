@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Models;
 using SchoolAPI.Persistence;
+using SchoolAPI.Persistence.Entities;
 
-namespace SchoolAPI.Models
+namespace SchoolAPI.Persistence.EF
 {
     public class SchoolContext: DbContext
     {
