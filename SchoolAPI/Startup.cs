@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SchoolAPI.Models;
 using SchoolAPI.Persistence.EF;
+using SchoolAPI.Service;
 
 namespace SchoolAPI
 {
@@ -37,6 +38,13 @@ namespace SchoolAPI
 
             services.AddDbContext<SchoolContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
+            // Declare DI (Dependency Injection)
+            // Transient objects are always different; a new instance is provided to every controller and every service.
+            // Scoped objects are the same within a request, but different across different requests.
+            // Singleton objects are the same for every object and every request.
+            services.AddTransient<IInstructorService, InstructorService>();
+            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<ICourseService, CourseService>();
             services.AddControllersWithViews();
             services.AddCors();
         }

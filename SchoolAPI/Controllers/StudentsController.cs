@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SchoolAPI.Models;
+using SchoolAPI.Models.Student;
 using SchoolAPI.Persistence.EF;
 using SchoolAPI.Persistence.Entities;
+using SchoolAPI.Service;
 
 namespace SchoolAPI.Controllers
 {
@@ -16,124 +17,56 @@ namespace SchoolAPI.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly SchoolContext _context;
-        public StudentController(SchoolContext context)
+        private readonly IStudentService _studentService;
+        public StudentController(IStudentService studentService)
         {
-            _context = context;
+            _studentService = studentService;
         }
-        public IList<StudentModel> Students { get; set; }
 
         [HttpGet]
-        public IEnumerable<StudentModel> ListStudent()
+        public async Task<IActionResult> GetAll()
         {
-            IQueryable<StudentModel> student = _context.Students
-                .Include(x => x.Enrollments)
-                .Select(x => new StudentModel()
-                {
-                    LastName = x.LastName,
-                    FirstMidName = x.FirstMidName,
-                    GradeCount = x.Enrollments.Count
-                });
-            return student;
+            var students = await _studentService.GetAll();
+            return Ok(students);
         }
-        [HttpGet("{id}")]
-        public Student GetStudent(int studentId)
+        [HttpGet("{studentId}")]
+        public async Task<IActionResult> GetById(int studentId)
         {
-            return _context.Students.Find(studentId);
+            var student = await _studentService.GetById(studentId);
+            if (student == null)
+                return BadRequest();
+            return Ok(student);
         }
         [HttpPost]
-        public bool InsertStudent(Student studentItem)
+        public async Task<IActionResult> Create([FromForm] StudentCreateRequest request)
         {
-            bool status;
-            try
-            {
-                _context.Students.Add(studentItem);
-                _context.SaveChanges();
-                status = true;
-            }
-            catch (Exception)
-            {
-                status = false;
-            }
-            return status;
+            var result = await _studentService.Create(request);
+            if (result == 0)
+                return BadRequest();
+            return Ok(result);
         }
-        [HttpPut("{id}")]
-        public bool UpdateStudent(Student studentItem)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] StudentUpdateRequest request)
         {
-            bool status;
-            try
-            {
-                Student stuItem = _context.Students.Find(studentItem.ID);
-                if (stuItem != null)
-                {
-                    stuItem.LastName = studentItem.LastName;
-                    stuItem.FirstMidName = studentItem.LastName;
-                    stuItem.EnrollmentDate = studentItem.EnrollmentDate;
-                    _context.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception)
-            {
-                status = false;
-            }
-            return status;
+            var result = await _studentService.Update(request);
+            if (result == 0)
+                return BadRequest();
+            return Ok(result);
         }
-        [HttpDelete("{id}")]
-        public bool DeleteStudent(int id)
+        [HttpDelete("{studentId}")]
+        public async Task<IActionResult> Delete(int studentId)
         {
-            bool status;
-            try
-            {
-                Student stuItem = _context.Students.Find(id);
-                if (stuItem != null)
-                {
-                    _context.Students.Remove(stuItem);
-                    _context.SaveChanges();
-                }
-                status = true;
-            }
-            catch (Exception)
-            {
-                status = false;
-            }
-            return status;
+            var result = await _studentService.Delete(studentId);
+            if (result == 0)
+                return BadRequest();
+            return Ok(result);
         }
-        //public async Task ListFilterStudent(string sortOrderName,string sortOrderGrade, string searchString)
-        //{
-        //    string nameSort = String.IsNullOrEmpty(sortOrderName) ? "name_desc" : "";
-        //    string gradeSort = String.IsNullOrEmpty(sortOrderGrade) ? "grade_desc" : "";
-        //    IQueryable<StudentModel> student = _context.Students
-        //        .Include(x => x.Enrollments)
-        //        .Select(x => new StudentModel()
-        //        {
-        //            LastName = x.LastName,
-        //            FirstMidName = x.FirstMidName,
-        //            GradeCount = x.Enrollments.Count
-        //        });
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        student = student.Where(x => x.LastName.Contains(searchString) || x.FirstMidName.Contains(searchString) || x.GradeCount.ToString().Contains(searchString));
-        //    }
-        //    switch (nameSort)
-        //    {
-        //        case "name_desc":
-        //            student = student.OrderBy(s => s.FirstMidName);
-        //            break;
-        //        default:
-        //            student = student.OrderBy(s => s.LastName);
-        //            break;
-        //    }
-        //    switch (gradeSort)
-        //    {
-        //        case "grade_desc":
-        //            student = student.OrderBy(s => s.Grade);
-        //            break;
-        //        default:
-        //            student = student.OrderBy(s => s.LastName);
-        //            break;
-        //    }
-        //    Students = await student.AsNoTracking().ToListAsync();
-        //}
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging(string sortOrder, string keyword, int pageIndex,
+            int pageSize)
+        {
+            var students = await _studentService.GetAllPaging(sortOrder, keyword, pageIndex, pageSize);
+            return Ok(students);
+        }
     }
 }

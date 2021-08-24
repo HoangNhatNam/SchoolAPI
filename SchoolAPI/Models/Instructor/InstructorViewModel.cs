@@ -4,19 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using SchoolAPI.Persistence.Entities;
 
-namespace SchoolAPI.Models
+namespace SchoolAPI.Models.Instructor
 {
-    public class InstructorModel
+    public class InstructorViewModel
     {
         public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
         public DateTime HireDate { get; set; }
-        public OfficeAssignment OfficeAssignment { get; set; }
-        public ICollection<CourseAssignment> CourseAssignment { get; set; }
+
+        public string FullName { get; set; }
         public string Location { get; set; }
-        public string Title { get; set; }
+        public IEnumerable<string> Title { get; set; }
         public int Credits { get; set; }
-        public List<string> ListTitle { get; set; }
     }
 }

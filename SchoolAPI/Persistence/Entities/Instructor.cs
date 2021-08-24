@@ -20,6 +20,9 @@ namespace SchoolAPI.Persistence.Entities
 
         public DateTime HireDate { get; set; }
 
+        [NotMapped]
+        public string FullName => LastName.Trim() + " " + FirstMidName.Trim();
+
         public OfficeAssignment OfficeAssignment { get; set; }
 
         public ICollection<CourseAssignment> CourseAssignment { get; set; }
