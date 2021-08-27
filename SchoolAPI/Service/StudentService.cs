@@ -93,69 +93,22 @@ namespace SchoolAPI.Service
 
         public async Task<List<StudentViewModel>> GetByIdCourse(int courseId)
         {
-            //IQueryable<StudentViewModel> student = _context.Students
-            //    .Include(x => x.Enrollments.Where(a => a.CourseID.Equals(courseId)))
-            //    .ThenInclude(x => x.Course)
-            //    .Select(x => new StudentViewModel()
-            //    {
-            //        ID = x.ID,
-            //        LastName = x.LastName,
-            //        FirstMidName = x.FirstMidName,
-            //        GradeCount = x.Enrollments.Count,
-            //        EnrollmentDate = x.EnrollmentDate,
-            //        Title = x.Enrollments.Select(e => e.Course.Title)
-            //    });
-            var student = from s in _context.Students
-                join e in _context.Enrollments on s.ID equals e.StudentID
-                join c in _context.Courses on e.CourseID equals c.CourseID
-                where e.CourseID == courseId
-                select new StudentViewModel()
-                {
-                    ID = s.ID,
-                    LastName = s.LastName,
-                    FirstMidName = s.FirstMidName,
-                    GradeCount = s.Enrollments.Count,
-                    EnrollmentDate = s.EnrollmentDate,
-                    Course = s.Enrollments.Select(e => new CourseCustomView()
-                    {
-                        CourseId = e.CourseID,
-                        Title = e.Course.Title,
-                        Grade = e.Grade,
-                    })
-                };
-            var student1 = _context.Students
-                .Include(x => x.Enrollments)
-                .ThenInclude(x => x.Course)
-                .Select(x => x.Enrollments.Where(x => x.CourseID == courseId));
-            // var studentViewModel = _mapper.ProjectTo<StudentViewModel>(student1);
-            return await student.AsNoTracking().ToListAsync();
+            var student = _context.Enrollments
+                .Where(e => e.CourseID == courseId)
+                .Select(x => x.Student);
+            var studentViewModel = _mapper.ProjectTo<StudentViewModel>(student);
+            return await studentViewModel.AsNoTracking().ToListAsync();
         }
 
         public async Task<List<StudentViewModel>> GetByGrade(Grade grade)
         {
-            var student = from s in _context.Students
-                join e in _context.Enrollments on s.ID equals e.StudentID
-                where e.Grade.Equals(grade)
-                select new StudentViewModel()
-                {
-                    ID = s.ID,
-                    LastName = s.LastName,
-                    FirstMidName = s.FirstMidName,
-                    GradeCount = s.Enrollments.Count,
-                    EnrollmentDate = s.EnrollmentDate,
-                    Course = s.Enrollments.Select(e => new CourseCustomView()
-                    {
-                        Title = e.Course.Title,
-                        Grade = e.Grade,
-                    })
-                };
             // query
-            //var student1 = _context.Students
-            //    .Include(x => x.Enrollments)
-            //    .Select(x => x.Enrollments.Where(e => e.Grade.Equals(grade)));
+            var student = _context.Enrollments
+                .Where(x => x.Grade.Equals(grade))
+                .Select(x => x.Student);
             // mapping
-            // var studentViewModel = _mapper.ProjectTo<StudentViewModel>(student1);
-            return await student.AsNoTracking().ToListAsync();
+            var studentViewModel = _mapper.ProjectTo<StudentViewModel>(student);
+            return await studentViewModel.AsNoTracking().ToListAsync();
         }
 
         // sortOrder = lastname, firstname

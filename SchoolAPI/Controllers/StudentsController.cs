@@ -56,14 +56,17 @@ namespace SchoolAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] StudentCreateRequest request)
         {
+            // model binding
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+            // model validation
             if (_studentService.VerifyName(request.LastName, request.FirstMidName))
             {
                 return BadRequest($"A user named {request.LastName} {request.FirstMidName} already exists.");
             }
+            // action
             var result = await _studentService.Create(request);
             if (result == 0)
                 return BadRequest();
@@ -72,10 +75,12 @@ namespace SchoolAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] StudentUpdateRequest request)
         {
+            // model binding
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+            // action
             var result = await _studentService.Update(request);
             if (result == 0)
                 return BadRequest();

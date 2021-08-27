@@ -45,6 +45,16 @@ namespace SchoolAPI.Service
             return await _context.SaveChangesAsync();
         }
 
+        public bool VerifyName(string lastName, string firstMidName)
+        {
+            var instructor = _context.Instructors.FirstOrDefault(x => x.LastName == lastName && x.FirstMidName == firstMidName);
+            if (instructor != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public async Task<List<InstructorViewModel>> GetAll()
         {
             return await _mapper.ProjectTo<InstructorViewModel>(_context.Instructors)

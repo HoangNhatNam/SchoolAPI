@@ -38,6 +38,17 @@ namespace SchoolAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]InstructorCreateRequest request)
         {
+            // model binding
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            // model validation
+            if (_instructorService.VerifyName(request.LastName, request.FirstMidName))
+            {
+                return BadRequest($"A user named {request.LastName} {request.FirstMidName} already exists.");
+            }
+            // action
             var result = await _instructorService.Create(request);
             if (result == 0)
                 return BadRequest();

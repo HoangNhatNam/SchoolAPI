@@ -14,5 +14,6 @@ namespace SchoolAPI.Models.Student
         public DateTime EnrollmentDate { get; set; }
         public int GradeCount { get; set; }
         public IEnumerable<CourseCustomView> Course { get; set; }
+
     }
 }
