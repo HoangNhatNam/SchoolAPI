@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolAPI.Exceptions;
@@ -14,22 +15,15 @@ namespace SchoolAPI.Service
     public class InstructorService: IInstructorService
     {
         private readonly SchoolContext _context;
-        public InstructorService(SchoolContext context)
+        private readonly IMapper _mapper;
+        public InstructorService(SchoolContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<int> Create(InstructorCreateRequest request)
         {
-            var instructor = new Instructor()
-            {
-                LastName = request.LastName,
-                FirstMidName = request.FirstMidName,
-                HireDate = request.HireDate,
-                OfficeAssignment = new OfficeAssignment()
-                {
-                    Location = request.Location
-                }
-            };
+            var instructor = _mapper.Map<Instructor>(request);
             await _context.Instructors.AddAsync(instructor);
             return await _context.SaveChangesAsync();
         }
@@ -39,10 +33,7 @@ namespace SchoolAPI.Service
             var instructor = await _context.Instructors.FindAsync(request.ID);
             var offAssign = await _context.OfficeAssignments.FirstOrDefaultAsync(x => x.InstructorID == request.ID);
             if (instructor == null || offAssign == null) throw new SchoolException($"Cannot find a instructor with id: {request.ID}");
-            instructor.LastName = request.LastName;
-            instructor.FirstMidName = request.FirstMidName;
-            instructor.HireDate = request.HireDate;
-            offAssign.Location = request.Location;
+            _mapper.Map(request, instructor);
             return await _context.SaveChangesAsync();
         }
 
@@ -56,80 +47,45 @@ namespace SchoolAPI.Service
 
         public async Task<List<InstructorViewModel>> GetAll()
         {
-            IQueryable<InstructorViewModel> instructor = _context.Instructors
-                .Include(x => x.OfficeAssignment)
-                .Include(x => x.CourseAssignment)
-                .ThenInclude(x => x.Course)
-                .Select(x => new InstructorViewModel()
-                {
-                    ID = x.ID,
-                    LastName = x.LastName,
-                    FirstMidName = x.FirstMidName,
-                    HireDate = x.HireDate,
-                    FullName = x.FullName,
-                    Location = x.OfficeAssignment.Location,
-                    Title = x.CourseAssignment.Select(ca => ca.Course.Title)
-                });
-            return await instructor.AsNoTracking().ToListAsync();
+            return await _mapper.ProjectTo<InstructorViewModel>(_context.Instructors)
+                .AsNoTracking().ToListAsync();
         }
 
         public async Task<InstructorViewModel> GetById(int instructorId)
         {
-            var instructor = await _context.Instructors.FindAsync(instructorId);
-            var offAssign = await _context.OfficeAssignments.FirstOrDefaultAsync(x => x.InstructorID == instructorId);
-            var instructorViewModel = new InstructorViewModel()
-            {
-                ID = instructor.ID,
-                LastName = instructor.LastName,
-                FirstMidName = instructor.FirstMidName,
-                HireDate = instructor.HireDate,
-                FullName = instructor.FullName,
-                Location = offAssign.Location
-            };
+            var instructor = _context.Instructors
+                .Where(x => x.ID == instructorId);
+            if (instructor == null) throw new SchoolException($"Cannot find a instructor with id: {instructorId}");
+            var instructorViewModel = await _mapper.ProjectTo<InstructorViewModel>(instructor).FirstOrDefaultAsync();
             return instructorViewModel;
         }
 
-
-        // sortOrder = lastname, firstmidname or location
+        // sortOrder = lastname, firstname or location
         public async Task<List<InstructorViewModel>> GetAllPaging(string sortOrder, string keyword, int pageIndex,
             int pageSize)
         {
-            // select join
-            var query = from i in _context.Instructors
-                join o in _context.OfficeAssignments on i.ID equals o.InstructorID
-                select new { i, o};
+            // mapping and query
+            IQueryable<InstructorViewModel> student = _mapper.ProjectTo<InstructorViewModel>(_context.Instructors);
             // filter
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(x => x.i.LastName.Contains(keyword)|| x.i.FirstMidName.Contains(keyword) || x.o.Location.Contains(keyword));
+                student = student.Where(x => x.LastName.Contains(keyword) || x.FirstMidName.Contains(keyword) || x.Location.Contains(keyword));
             }
             // sort
             switch (sortOrder)
             {
                 case "lastname":
-                    query = query.OrderByDescending(s => s.i.LastName);
+                    student = student.OrderByDescending(s => s.LastName);
                     break;
-                case "firstmidname":
-                    query = query.OrderByDescending(s => s.i.FirstMidName);
-                    break;
-                case "location":
-                    query = query.OrderByDescending(s => s.o.Location);
+                case "firstname":
+                    student = student.OrderByDescending(s => s.FirstMidName);
                     break;
                 default:
-                    query = query.OrderBy(s => s.i.ID);
+                    student = student.OrderByDescending(s => s.ID);
                     break;
             }
             // paging
-            var data = query.Skip((pageIndex - 1)*pageSize).Take(pageSize).Select(x => new InstructorViewModel()
-            {
-                ID = x.i.ID,
-                LastName = x.i.LastName,
-                FirstMidName = x.i.FirstMidName,
-                FullName = x.i.FullName,
-                Location = x.o.Location
-            });
-            // select and projection
-            return await data.AsNoTracking().ToListAsync();
+            return await student.Skip((pageIndex - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync();
         }
     }
 }

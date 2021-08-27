@@ -14,7 +14,6 @@ namespace SchoolAPI.Service
         Task<int> Delete(int courseId);
         Task<List<CourseViewModel>> GetAll();
         Task<List<CourseViewModel>> GetCourseByIdInstructor(int instructorId);
-        Task<List<CourseViewModel>> Test(int instructorId);
         Task<List<CourseViewModel>> GetAllPaging(string sortOrder, string keyword, int pageIndex, int pageSize);
     }
 }

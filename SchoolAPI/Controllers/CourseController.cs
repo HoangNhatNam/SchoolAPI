@@ -32,13 +32,5 @@ namespace SchoolAPI.Controllers
                 return BadRequest();
             return Ok(courses);
         }
-        [HttpGet("{grade}/abc")]
-        public async Task<IActionResult> Test(int grade)
-        {
-            var courses = await _courseService.Test(grade);
-            if (courses == null)
-                return BadRequest();
-            return Ok(courses);
-        }
     }
 }

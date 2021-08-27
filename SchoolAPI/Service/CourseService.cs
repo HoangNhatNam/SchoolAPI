@@ -71,16 +71,6 @@ namespace SchoolAPI.Service
             return await query.AsNoTracking().ToListAsync();
         }
 
-        public Task<List<CourseViewModel>> Test(int grade)
-        {
-            //IQueryable<CourseViewModel> query = from c in _context.Courses
-            //    join ca in _context.CourseAssignments on c.CourseID equals ca.CourseID
-            //    join i in _context.Instructors on ca.InstructorID equals i.ID
-            //    where i.ID ==  
-            //return await instructor.AsNoTracking().ToListAsync();
-            throw new NotImplementedException();
-        }
-
         public Task<List<CourseViewModel>> GetAllPaging(string sortOrder, string keyword, int pageIndex, int pageSize)
         {
             throw new NotImplementedException();

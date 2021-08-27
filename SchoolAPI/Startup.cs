@@ -9,8 +9,10 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Mappers;
 using SchoolAPI.Models;
 using SchoolAPI.Persistence.EF;
 using SchoolAPI.Service;
@@ -42,10 +44,12 @@ namespace SchoolAPI
             // Transient objects are always different; a new instance is provided to every controller and every service.
             // Scoped objects are the same within a request, but different across different requests.
             // Singleton objects are the same for every object and every request.
-            services.AddTransient<IInstructorService, InstructorService>();
-            services.AddTransient<IStudentService, StudentService>();
-            services.AddTransient<ICourseService, CourseService>();
+            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddControllersWithViews();
+            services.AddAutoMapper
+                (typeof(AutoMapperProfile).Assembly);
             services.AddCors();
         }
 

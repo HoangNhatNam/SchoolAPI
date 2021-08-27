@@ -12,10 +12,8 @@ namespace SchoolAPI.Models.Instructor
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
         public DateTime HireDate { get; set; }
-
         public string FullName { get; set; }
         public string Location { get; set; }
-        public IEnumerable<string> Title { get; set; }
-        public int Credits { get; set; }
+        public IEnumerable<CourseDepartmentModel> Course { get; set; }
     }
 }

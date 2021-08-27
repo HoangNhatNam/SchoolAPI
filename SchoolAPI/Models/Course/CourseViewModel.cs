@@ -11,11 +11,8 @@ namespace SchoolAPI.Models.Course
         public int CourseID { get; set; }
         public string Title { get; set; }
         public int Credits { get; set; }
-        public IEnumerable<int> DepartmentID { get; set; }
         public string Name { get; set; }
         public decimal Budget { get; set; }
         public DateTime StartDate { get; set; }
-        public Grade? Grade { get; set; }
-        public IEnumerable<string> FirstMidName { get; set; }
     }
 }

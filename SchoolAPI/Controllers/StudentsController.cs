@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolAPI.Exceptions;
 using SchoolAPI.Models.Student;
-using SchoolAPI.Persistence.EF;
 using SchoolAPI.Persistence.Entities;
 using SchoolAPI.Service;
 
@@ -37,9 +37,33 @@ namespace SchoolAPI.Controllers
                 return BadRequest();
             return Ok(student);
         }
+        [HttpGet("GetByCourse/{courseId}")]
+        public async Task<IActionResult> GetByIdCourse(int courseId)
+        {
+            var student = await _studentService.GetByIdCourse(courseId);
+            if (student == null)
+                return BadRequest();
+            return Ok(student);
+        }
+        [HttpGet("GetByGrade/{grade}")]
+        public async Task<IActionResult> GetByGrade(Grade grade)
+        {
+            var student = await _studentService.GetByGrade(grade);
+            if (student == null)
+                return BadRequest();
+            return Ok(student);
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] StudentCreateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (_studentService.VerifyName(request.LastName, request.FirstMidName))
+            {
+                return BadRequest($"A user named {request.LastName} {request.FirstMidName} already exists.");
+            }
             var result = await _studentService.Create(request);
             if (result == 0)
                 return BadRequest();
@@ -48,10 +72,29 @@ namespace SchoolAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] StudentUpdateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var result = await _studentService.Update(request);
             if (result == 0)
                 return BadRequest();
             return Ok(result);
+        }
+        [HttpPut("course/{studentId}/{courseId}")]
+        public async Task<IActionResult> CourseAssign(int studentId, int courseId)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await _studentService.CourseAssign(studentId, courseId);
+            if (result == false)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
         [HttpDelete("{studentId}")]
         public async Task<IActionResult> Delete(int studentId)
