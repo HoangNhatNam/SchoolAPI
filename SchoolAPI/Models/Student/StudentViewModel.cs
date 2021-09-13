@@ -11,8 +11,9 @@ namespace SchoolAPI.Models.Student
         public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstMidName { get; set; }
+        public string FullName { get; set; }
         public DateTime EnrollmentDate { get; set; }
-        public int GradeCount { get; set; }
+        public int EnrollmentCount { get; set; }
         public IEnumerable<CourseCustomView> Course { get; set; }
 
     }

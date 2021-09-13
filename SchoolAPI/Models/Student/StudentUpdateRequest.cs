@@ -20,7 +20,8 @@ namespace SchoolAPI.Models.Student
         public string FirstMidName { get; set; }
 
         [Required(ErrorMessage = "Please enter enrollment date")]
-        [DataType(DataType.DateTime)]
         public DateTime EnrollmentDate { get; set; }
+
+        public IEnumerable<CourseCustomView> Course { get; set; }
     }
 }

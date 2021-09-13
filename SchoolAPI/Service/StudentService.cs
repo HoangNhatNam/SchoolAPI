@@ -34,8 +34,19 @@ namespace SchoolAPI.Service
         public async Task<int> Update(StudentUpdateRequest request)
         {
             var student = await _context.Students.FindAsync(request.ID);
+            var enrollment = await _context.Enrollments.Where(x => x.StudentID == student.ID).ToListAsync();
             if (student == null) throw new SchoolException($"Cannot find a student with id: {request.ID}");
             _mapper.Map(request, student);
+            foreach (var enroll in enrollment)
+            {
+                foreach (var item in request.Course)
+                {
+                    if (enroll.CourseID == item.CourseId)
+                    {
+                        enroll.Grade = item.Grade;
+                    }
+                }
+            }
             return await _context.SaveChangesAsync();
         }
 
@@ -47,17 +58,17 @@ namespace SchoolAPI.Service
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> CourseAssign(int studentId, int courseId)
+        public async Task<bool> CourseAssign(CourseAssign courseAssign)
         {
-            var student = await _context.Students.FindAsync(studentId);
+            var student = await _context.Students.FindAsync(courseAssign.StudentId);
             if (student == null)
             {
                 return false;
             }
             var enrollment = new Enrollment()
             {
-                StudentID = studentId,
-                CourseID = courseId,
+                StudentID = courseAssign.StudentId,
+                CourseID = courseAssign.CourseId,
                 Grade = Grade.None
             };
             await _context.Enrollments.AddAsync(enrollment);
@@ -119,7 +130,7 @@ namespace SchoolAPI.Service
             // filter
             if (!string.IsNullOrEmpty(keyword))
             {
-                student = student.Where(x => x.LastName.Contains(keyword) || x.FirstMidName.Contains(keyword) || x.GradeCount.ToString().Contains(keyword));
+                student = student.Where(x => x.LastName.Contains(keyword) || x.FirstMidName.Contains(keyword) || x.EnrollmentCount.ToString().Contains(keyword));
             }
             // sort
             switch (sortOrder)

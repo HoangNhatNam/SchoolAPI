@@ -32,6 +32,10 @@ namespace SchoolAPI.Controllers
         [HttpGet("{studentId}")]
         public async Task<IActionResult> GetById(int studentId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var student = await _studentService.GetById(studentId);
             if (student == null)
                 return BadRequest();
@@ -54,7 +58,7 @@ namespace SchoolAPI.Controllers
             return Ok(student);
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] StudentCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] StudentCreateRequest request)
         {
             // model binding
             if (!ModelState.IsValid)
@@ -73,7 +77,7 @@ namespace SchoolAPI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] StudentUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] StudentUpdateRequest request)
         {
             // model binding
             if (!ModelState.IsValid)
@@ -86,15 +90,14 @@ namespace SchoolAPI.Controllers
                 return BadRequest();
             return Ok(result);
         }
-        [HttpPut("course/{studentId}/{courseId}")]
-        public async Task<IActionResult> CourseAssign(int studentId, int courseId)
+        [HttpPost("course")]
+        public async Task<IActionResult> CourseAssign([Bind("CourseId,StudentId")][FromForm] CourseAssign courseAssign)
         {
-            
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = await _studentService.CourseAssign(studentId, courseId);
+            var result = await _studentService.CourseAssign(courseAssign);
             if (result == false)
             {
                 return BadRequest();

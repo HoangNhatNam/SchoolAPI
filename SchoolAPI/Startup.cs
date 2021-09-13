@@ -47,6 +47,7 @@ namespace SchoolAPI
             services.AddScoped<IInstructorService, InstructorService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddControllersWithViews();
             services.AddAutoMapper
                 (typeof(AutoMapperProfile).Assembly);

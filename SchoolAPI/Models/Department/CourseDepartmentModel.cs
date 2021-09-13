@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SchoolAPI.Models.Instructor
+namespace SchoolAPI.Models.Department
 {
     public class CourseDepartmentModel
     {
-        public int CourseId { get; set; }
+        public int CourseID { get; set; }
         public string Title { get; set; }
-        public string Name { get; set; }
+        public int Credits { get; set; }
     }
 }

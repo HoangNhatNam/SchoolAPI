@@ -36,7 +36,7 @@ namespace SchoolAPI.Controllers
             return Ok(instructor);
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]InstructorCreateRequest request)
+        public async Task<IActionResult> Create([FromBody]InstructorCreateRequest request)
         {
             // model binding
             if (!ModelState.IsValid)
